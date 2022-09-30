@@ -1,0 +1,27 @@
+{
+  "cli": {
+    "version": ">= 0.47.0",
+    "requireCommit": false
+  },
+  "build": {
+    "staging": {
+      "releaseChannel": "staging",
+      "ios": {
+        "autoIncrement": "buildNumber"
+      },
+      "android": {
+        "autoIncrement": "versionCode"
+      },
+      "env": {
+        "APP_ENV": "staging"
+      }
+    },
+    "production": {
+      "extends": "staging",
+      "releaseChannel": "production",
+      "env": {
+        "APP_ENV": "production"
+      }
+    }
+  }
+}
