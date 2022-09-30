@@ -13,6 +13,12 @@ const styles = StyleSheet.create({
     width: 100,
     marginBottom: 20,
   },
+  header: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   headerText: {
     fontSize: 35,
     color: 'black',
@@ -47,6 +53,11 @@ const styles = StyleSheet.create({
     paddingLeft: 7,
     paddingRight: 3,
     fontSize: 16,
+  },
+  fullScreenSpinner: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })
 

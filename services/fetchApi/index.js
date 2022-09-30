@@ -2,14 +2,13 @@ import tokenStorage from '../tokenStorage'
 import configureRequest from './configureRequest'
 import wrapError from './wrapError'
 import api from './apiHelper'
-import { Native as Sentry } from 'sentry-expo'
 
 const fetchApi = async (
   route,
   verb,
   { body = '', isUrlVerbatim = false } = {},
 ) => {
-  const url = isUrlVerbatim ? route : `${api}/api/v1${route}`
+  const url = isUrlVerbatim ? route : `${api}${route}`
   try {
     const config = await configureRequest(verb, body)
     const response = await fetch(url, config)
@@ -22,7 +21,6 @@ const fetchApi = async (
     }
     return response.status === 204 ? {} : response.json()
   } catch (error) {
-    Sentry.captureException(error)
     return Promise.reject(error)
   }
 }

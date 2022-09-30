@@ -6,11 +6,19 @@ import {
   Text,
   TouchableWithoutFeedback,
   Keyboard,
+  Button,
 } from 'react-native'
 import LoginInputs from './loginInputs'
+import Spinner from '../common/Spinner'
+import Alert from '../common/Alert'
+import {
+  postUserLogin,
+  createNewUser,
+  emailValidator,
+} from '../../requests/users'
 import styles from './styles'
 
-export default function Login({ authenticated, setAuthenticated }) {
+export default function Login({ setAuthenticated }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [authenticating, setAuthenticating] = useState(false)
@@ -34,13 +42,47 @@ export default function Login({ authenticated, setAuthenticated }) {
     }
   }
 
-  const handleLogin = async e => {}
+  const handleLogin = async e => {
+    e.preventDefault()
+    try {
+      setAuthenticating(true)
+      await postUserLogin(username, password)
+      setAuthenticating(false)
+      setAuthenticated(true)
+    } catch (error) {
+      setAuthenticating(false)
+      if (error.status === 500) {
+        return loginAlert('Login failed, please try again later.')
+      }
+      if (error.body?.error_message) {
+        loginAlert(error.body.error_message)
+      } else {
+        loginAlert(error.message)
+      }
+    }
+  }
 
-  return (
+  const loginAlert = message =>
+    Alert({
+      titleText: 'Login Error',
+      bodyText: message,
+      noCancel: true,
+      confirmText: 'Ok',
+    })
+
+  const loginDisabled = !username.length || !password.length
+
+  return authenticating ? (
+    <View style={styles.fullScreenSpinner}>
+      <Spinner />
+    </View>
+  ) : (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <Image style={styles.porscheIcon} source={porscheIcon} />
-        <Text style={styles.headerText}>Porsche Hunter</Text>
+        <View style={styles.header}>
+          <Image style={styles.porscheIcon} source={porscheIcon} />
+          <Text style={styles.headerText}>Porsche Hunter</Text>
+        </View>
         <LoginInputs
           username={username}
           password={password}
@@ -49,6 +91,7 @@ export default function Login({ authenticated, setAuthenticated }) {
           passwordInputRef={passwordRef}
           onSubmit={onSubmit}
         />
+        <Button title="Login" onPress={handleLogin} disabled={loginDisabled} />
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   )

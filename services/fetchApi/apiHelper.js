@@ -12,7 +12,7 @@ const getApi = () => {
     typeof packagerOpts === `object` && packagerOpts.dev && Device.isDevice
 
   if (isDevDevice) {
-    const localIpAddress = debuggerHost.split(`:`).shift().concat(`:3001`)
+    const localIpAddress = debuggerHost.split(`:`).shift().concat(`:3000`)
     return 'http://'.concat(localIpAddress)
   }
 

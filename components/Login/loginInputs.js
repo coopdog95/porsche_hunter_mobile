@@ -46,9 +46,7 @@ const LoginInputs = ({
         returnKeyType = 'go'
         inputProps.onSubmitEditing = e => onSubmit(e, 'password')
         inputProps.secureTextEntry = true
-        if (Platform.OS === 'ios') {
-          inputProps.textContentType = 'password'
-        }
+        inputProps.textContentType = 'password'
         break
       default:
         break
