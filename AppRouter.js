@@ -17,7 +17,7 @@ export default function AppRouter({ authenticated, setAuthenticated }) {
     <SafeAreaProvider>
       <NavigationContainer>
         <Navigator>
-          {!authenticated ? (
+          {authenticated ? (
             <Screen name="Login" options={{ headerShown: false }}>
               {props => (
                 <Login
