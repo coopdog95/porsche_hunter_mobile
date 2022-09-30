@@ -11,11 +11,7 @@ import {
 import LoginInputs from './loginInputs'
 import Spinner from '../common/Spinner'
 import Alert from '../common/Alert'
-import {
-  postUserLogin,
-  createNewUser,
-  emailValidator,
-} from '../../requests/users'
+import { postUserLogin, createNewUser } from '../../requests/users'
 import styles from './styles'
 
 export default function Login({ setAuthenticated }) {

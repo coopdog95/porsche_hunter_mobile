@@ -14,6 +14,3 @@ export const createNewUser = async (username, password) => {
   await tokenStorage.set(response.token)
   return response
 }
-
-export const emailValidator = email =>
-  /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(email)
