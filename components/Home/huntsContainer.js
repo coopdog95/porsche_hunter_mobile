@@ -3,10 +3,12 @@ import { View, Text, FlatList } from 'react-native'
 import HuntListItem from '../Hunts/huntListItem'
 import styles from './styles'
 
-const HuntsContainer = ({ hunts }) => {
+const HuntsContainer = ({ hunts, navigation }) => {
   console.log('hunts', hunts)
 
-  const renderItem = ({ item: hunt }) => <HuntListItem hunt={hunt} />
+  const renderItem = ({ item: hunt }) => (
+    <HuntListItem hunt={hunt} navigation={navigation} />
+  )
 
   return (
     <View style={styles.huntsContainer}>

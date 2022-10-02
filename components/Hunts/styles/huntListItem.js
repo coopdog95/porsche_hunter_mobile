@@ -14,10 +14,13 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 5,
-    backgroundColor: 'teal',
+    backgroundColor: 'white',
     flex: 1,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
+    marginHorizontal: 15,
+    marginVertical: 10,
+    padding: 10,
+    borderRadius: 10,
+    // overflow: 'hidden',
   },
   header: {
     display: 'flex',
@@ -38,6 +41,11 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'flex-start',
     alignItems: 'center',
+  },
+  scrollView: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flex: 1,
   },
   bottomRow: {
     display: 'flex',

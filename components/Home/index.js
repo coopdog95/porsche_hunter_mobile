@@ -5,7 +5,7 @@ import Spinner from '../common/Spinner'
 import styles from './styles'
 import { getAllHunts } from '../../requests/hunts'
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const [loadingHunts, setLoadingHunts] = useState(false)
   const [hunts, setHunts] = useState(null)
 
@@ -28,7 +28,7 @@ const Home = () => {
         </View>
       ) : (
         <View style={styles.hunts}>
-          <HuntsContainer hunts={hunts} />
+          <HuntsContainer hunts={hunts} navigation={navigation} />
         </View>
       )}
     </View>

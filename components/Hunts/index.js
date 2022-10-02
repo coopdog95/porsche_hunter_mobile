@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Button } from 'react-native'
 import { getHuntById } from '../../requests/hunts'
 import { formatHuntDate } from '../../services/serializeDate'
 import CarListItem from './carListItem'
+import EditHuntModal from './editHuntModal'
 import styles from './styles'
 
 export default function Hunts({
@@ -13,6 +14,8 @@ export default function Hunts({
   },
 }) {
   const [hunt, setHunt] = useState(null)
+  const [editModalOpen, setEditModalOpen] = useState(false)
+
   const huntOwner = !!hunt?.user_id && hunt?.user_id === userId
 
   useEffect(() => {
@@ -25,12 +28,17 @@ export default function Hunts({
   }
 
   const renderHunt = () => {
-    const {
-      user: { username },
-      cars,
-    } = hunt
     return (
       <ScrollView style={styles.scrollView}>
+        {huntOwner && (
+          <View style={styles.editButton}>
+            <Button
+              title="Edit Hunt"
+              onPress={() => setEditModalOpen(true)}
+              color="white"
+            />
+          </View>
+        )}
         {renderHeader()}
         {renderCars()}
       </ScrollView>
@@ -60,6 +68,11 @@ export default function Hunts({
   return (
     <View style={styles.container}>
       {!hunt ? <Text>Loading...</Text> : renderHunt()}
+      <EditHuntModal
+        visible={editModalOpen}
+        hunt={hunt}
+        toggleModal={setEditModalOpen}
+      />
     </View>
   )
 }

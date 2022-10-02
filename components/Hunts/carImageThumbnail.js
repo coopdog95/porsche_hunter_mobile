@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { Image, View } from 'react-native'
 import styles from './styles/carImageThumbnail'
 
 const CarImageThumbnail = ({ imageUrl }) => {
@@ -8,7 +8,15 @@ const CarImageThumbnail = ({ imageUrl }) => {
 
   useEffect(() => {}, [])
 
-  return <View style={styles.container}></View>
+  return (
+    <View style={styles.container}>
+      <Image
+        source={{ uri: imageUrl }}
+        resizeMode="cover"
+        style={styles.image}
+      />
+    </View>
+  )
 }
 
 export default CarImageThumbnail
