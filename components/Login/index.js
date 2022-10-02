@@ -14,7 +14,7 @@ import Alert from '../common/Alert'
 import { postUserLogin, createNewUser } from '../../requests/users'
 import styles from './styles'
 
-export default function Login({ setAuthenticated }) {
+export default function Login({ setAuthenticated, setUserId }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [authenticating, setAuthenticating] = useState(false)
@@ -42,7 +42,8 @@ export default function Login({ setAuthenticated }) {
     e.preventDefault()
     try {
       setAuthenticating(true)
-      await postUserLogin(username, password)
+      const { user } = await postUserLogin(username, password)
+      setUserId(user.id)
       setAuthenticating(false)
       setAuthenticated(true)
     } catch (error) {

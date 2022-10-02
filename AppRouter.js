@@ -12,25 +12,33 @@ import Hunts from './components/Hunts'
 enableScreens()
 const { Navigator, Screen } = createNativeStackNavigator()
 
-export default function AppRouter({ authenticated, setAuthenticated }) {
+export default function AppRouter({
+  authenticated,
+  setAuthenticated,
+  userId,
+  setUserId,
+}) {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
         <Navigator>
-          {authenticated ? (
+          {!authenticated ? (
             <Screen name="Login" options={{ headerShown: false }}>
               {props => (
                 <Login
                   {...props}
                   authenticated={authenticated}
                   setAuthenticated={setAuthenticated}
+                  setUserId={setUserId}
                 />
               )}
             </Screen>
           ) : (
             <>
               <Screen name="Home" component={Home} />
-              <Screen name="Hunts" component={Hunts} />
+              <Screen name="Hunts">
+                {props => <Hunts {...props} userId={userId} />}
+              </Screen>
               <Screen name="Account" component={Account} />
             </>
           )}
