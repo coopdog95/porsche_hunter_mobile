@@ -53,6 +53,39 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 22,
   },
+  editCarContainer: {
+    zIndex: 1,
+  },
+  carListItem: {
+    height: 75,
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 7,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 5,
+    marginVertical: 5,
+  },
+  carListItemDetails: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    flex: 3,
+  },
+  carListItemModel: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  carListItemTrim: {
+    fontSize: 18,
+    fontWeight: '400',
+  },
+  carListItemImage: {
+    backgroundColor: 'red',
+    height: 70,
+    width: 70,
+  },
 })
 
 export default styles
