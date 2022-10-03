@@ -15,12 +15,10 @@ const HuntListItem = ({
   navigation,
 }) => {
   const viewHunt = () => navigation.navigate('Hunts', { huntId })
-  const url =
-    'https://www.pcarmarket.com/static/media/uploads/galleries/photos/uploads/galleries/2019-porsche-911-targa-4-gts/.thumbnails/IMG_0043.jpg/IMG_0043-tiny-2048x0-0.5x0.jpg'
   const formattedDate = formatHuntDate(createdAt)
 
   const mappedThumbnails = () =>
-    cars.map(car => <CarImageThumbnail key={car.id} imageUrl={url} />)
+    cars.map(car => <CarImageThumbnail key={car.id} imageUrl={car.image_url} />)
 
   return (
     <TouchableHighlight
