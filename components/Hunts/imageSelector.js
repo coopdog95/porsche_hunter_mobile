@@ -60,7 +60,7 @@ const ImageSelector = ({ car, imageBase64, setImageBase64 }) => {
       <Image
         source={{ uri: imageBase64 || car?.image_url }}
         style={styles.image}
-        resizeMode="contain"
+        resizeMode="cover"
       />
     </View>
   )
