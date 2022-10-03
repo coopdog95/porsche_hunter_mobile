@@ -15,6 +15,7 @@ export default function Hunts({
 }) {
   const [hunt, setHunt] = useState(null)
   const [editModalOpen, setEditModalOpen] = useState(false)
+  const [tempCars, setTempCars] = useState([])
 
   const huntOwner = !!hunt?.user_id && hunt?.user_id === userId
 
@@ -25,7 +26,10 @@ export default function Hunts({
   const fetchHunt = async () => {
     const fetchedHunt = await getHuntById(huntId)
     setHunt(fetchedHunt)
+    setTempCars(fetchedHunt.cars)
   }
+
+  const updateCars = newCars => setTempCars(newCars)
 
   const renderHunt = () => {
     return (
@@ -72,6 +76,9 @@ export default function Hunts({
         visible={editModalOpen}
         hunt={hunt}
         toggleModal={setEditModalOpen}
+        updateCars={updateCars}
+        tempCars={tempCars}
+        fetchHunt={fetchHunt}
       />
     </View>
   )
