@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Image, View } from 'react-native'
+import { Button, Image, View, Keyboard } from 'react-native'
 import Alert from '../common/Alert'
 import * as ImagePicker from 'expo-image-picker'
 import styles from './styles/editCar'
@@ -12,6 +12,7 @@ const ImageSelector = ({ car, imageBase64, setImageBase64 }) => {
     ImagePicker.useMediaLibraryPermissions()
 
   const openImagePicker = async () => {
+    Keyboard.dismiss()
     const permitted = await checkPermissions()
     if (!permitted) return showUpdatePermissionsAlert()
 
