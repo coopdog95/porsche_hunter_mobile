@@ -193,9 +193,15 @@ const EditHuntModal = ({
               />
             </View>
           )}
-          <ScrollView style={styles.scrollView}>
-            {tempCars.map(renderCar)}
-          </ScrollView>
+          {tempCars?.length ? (
+            <ScrollView style={styles.scrollView}>
+              {tempCars.map(renderCar)}
+            </ScrollView>
+          ) : (
+            <View style={styles.emptyCars}>
+              <Text style={{ fontSize: 18 }}>No cars added</Text>
+            </View>
+          )}
         </View>
         {hunt?.id && (
           <View style={styles.deleteHuntButton}>

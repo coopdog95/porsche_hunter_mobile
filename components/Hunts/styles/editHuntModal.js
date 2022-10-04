@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   carListItem: {
-    // height: 100,
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 7,
@@ -107,6 +106,11 @@ const styles = StyleSheet.create({
   deleteHuntButton: {
     backgroundColor: 'red',
     borderRadius: 8,
+  },
+  emptyCars: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: 20,
   },
 })
 
