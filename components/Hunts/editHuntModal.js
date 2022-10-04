@@ -11,7 +11,7 @@ import {
 import FullScreenModal from '../common/FullScreenModal'
 import EditCar from './editCar'
 import { models, trimsByModel } from '../../services/vehicleData'
-import { updateHunt, createHunt } from '../../requests/hunts'
+import { updateHunt, createHunt, deleteHunt } from '../../requests/hunts'
 import { deleteCar } from '../../requests/cars'
 import styles from './styles/editHuntModal'
 import Alert from '../common/Alert'
@@ -24,6 +24,7 @@ const EditHuntModal = ({
   tempCars,
   fetchHunt,
   fetchHunts,
+  navigation,
 }) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -34,8 +35,8 @@ const EditHuntModal = ({
   }, [visible])
 
   const setHuntDetails = () => {
-    setTitle(hunt.title)
-    setDescription(hunt.description)
+    setTitle(hunt?.title || '')
+    setDescription(hunt?.description || '')
   }
 
   const onSave = async () => {
@@ -69,6 +70,7 @@ const EditHuntModal = ({
     try {
       await deleteCar(carId)
       await fetchHunt()
+      await fetchHunts()
       Alert({
         titleText: 'Car deleted',
         bodyText: 'Car successfully deleted',
@@ -118,9 +120,26 @@ const EditHuntModal = ({
   )
 
   const onClose = () => {
-    updateCars(hunt?.cars)
+    updateCars(hunt?.cars || [])
     setHuntDetails()
     toggleModal(false)
+  }
+
+  const onConfirmDelete = async () => {
+    await deleteHunt(hunt?.id)
+    await fetchHunts()
+    toggleModal(false)
+    navigation.goBack()
+  }
+
+  const onDeleteHunt = async () => {
+    Alert({
+      titleText: 'Delete Hunt',
+      bodyText: 'Are you sure you would like to delete this hunt?',
+      onConfirm: onConfirmDelete,
+      confirmText: 'Delete',
+      destructiveConfirm: true,
+    })
   }
 
   const headerText = `Cars${tempCars.length ? ` (${tempCars.length})` : ''}`
@@ -178,6 +197,11 @@ const EditHuntModal = ({
             {tempCars.map(renderCar)}
           </ScrollView>
         </View>
+        {hunt?.id && (
+          <View style={styles.deleteHuntButton}>
+            <Button title="Delete Hunt" onPress={onDeleteHunt} color="white" />
+          </View>
+        )}
       </View>
     </FullScreenModal>
   )

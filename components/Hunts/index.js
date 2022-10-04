@@ -81,6 +81,7 @@ export default function Hunts({
         tempCars={tempCars}
         fetchHunt={fetchHunt}
         fetchHunts={fetchHunts}
+        navigation={navigation}
       />
     </View>
   )

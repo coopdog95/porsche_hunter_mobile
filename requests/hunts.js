@@ -16,3 +16,6 @@ export const createHunt = async (huntProps, cars) => {
   const body = JSON.stringify({ huntProps, cars })
   return await fetchApi(`/hunts`, 'POST', { body })
 }
+
+export const deleteHunt = async huntId =>
+  await fetchApi(`/hunts/${huntId}`, 'DELETE')

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Button } from 'react-native'
 import HuntsContainer from './huntsContainer'
 import Spinner from '../common/Spinner'
 import styles from './styles'
@@ -33,9 +33,11 @@ const Home = ({ navigation, hunts, fetchHunts, loadingHunts }) => {
             visible={modalOpen}
             hunt={null}
             toggleModal={setModalOpen}
-            fetchHunt={fetchHunts}
+            fetchHunt={() => {}}
+            fetchHunts={fetchHunts}
             tempCars={tempCars}
             updateCars={setTempCars}
+            navigation={navigation}
           />
         </View>
       )}
