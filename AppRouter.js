@@ -9,6 +9,7 @@ import Account from './components/Account'
 import Home from './components/Home'
 import Login from './components/Login'
 import Hunts from './components/Hunts'
+import { Button } from 'react-native'
 
 enableScreens()
 const { Navigator, Screen } = createNativeStackNavigator()
@@ -29,6 +30,11 @@ export default function AppRouter({
     setLoadingHunts(false)
   }
 
+  const logout = () => {
+    setAuthenticated(false)
+    setUserId(null)
+  }
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
@@ -46,7 +52,14 @@ export default function AppRouter({
             </Screen>
           ) : (
             <>
-              <Screen name="Home">
+              <Screen
+                name="Home"
+                options={{
+                  headerRight: _props => (
+                    <Button title="Logout" onPress={logout} color="red" />
+                  ),
+                }}
+              >
                 {props => (
                   <Home
                     {...props}
