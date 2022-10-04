@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     padding: 10,
     borderRadius: 10,
-    // overflow: 'hidden',
   },
   header: {
     display: 'flex',
