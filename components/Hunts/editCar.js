@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { Button, View, Keyboard } from 'react-native'
 import Dropdown from 'react-native-dropdown-picker'
 import { models, trimsByModel } from '../../services/vehicleData'
+import ImageSelector from './imageSelector'
 import styles from './styles/editCar'
 
 const defaultValue = { value: 'none', label: 'None' }
 
-const EditCar = ({ car }) => {
-  const [year, setYear] = useState('')
+const EditCar = ({ car, toggleEditing, cars, updateCars }) => {
   const [model, setModel] = useState(defaultValue)
   const [trim, setTrim] = useState(defaultValue)
+  const [imageBase64, setImageBase64] = useState(null)
   const [modelSelectorOpen, setModelSelectorOpen] = useState(false)
   const [trimSelectorOpen, setTrimSelectorOpen] = useState(false)
 
@@ -18,24 +19,24 @@ const EditCar = ({ car }) => {
   }, [])
 
   const onModelOpen = () => {
+    Keyboard.dismiss()
     setTrimSelectorOpen(false)
     setModelSelectorOpen(true)
   }
 
   const onTrimOpen = () => {
+    Keyboard.dismiss()
     setModelSelectorOpen(false)
     setTrimSelectorOpen(true)
   }
 
   const setCarDetails = () => {
-    const foundModel = models.find(model => model.value === car.model)
-    console.log('foundModel', foundModel)
+    const foundModel = models.find(model => model.value === car?.model)?.value
     if (foundModel) {
       setModel(foundModel)
       const foundTrim = trimsByModel[foundModel].find(
-        trim => trim.value === car.trim,
-      )
-      console.log('foundTrim', foundTrim)
+        trim => trim.value === car?.trim,
+      )?.value
       if (foundTrim) setTrim(foundTrim)
     }
   }
@@ -51,6 +52,36 @@ const EditCar = ({ car }) => {
     setTrim(trim)
     setTrimSelectorOpen(false)
   }
+
+  const onDiscardCar = () => {
+    setModel(defaultValue)
+    setTrim(defaultValue)
+    toggleEditing(false)
+  }
+
+  const onSaveCar = () => {
+    toggleEditing(false)
+    if (!car) {
+      const newCars = [
+        ...cars,
+        {
+          model: model.value,
+          trim: trim.value,
+          image_url: car?.image_url,
+          image_data: imageBase64,
+          unsaved: true,
+        },
+      ]
+      updateCars(newCars)
+    }
+  }
+
+  const saveDisabled =
+    !model?.value ||
+    model?.value === 'none' ||
+    !trim.value ||
+    (!car?.image_url && !imageBase64)
+  const showImageSelector = model?.value !== 'none' && trim?.value
 
   return (
     <View style={styles.container}>
@@ -78,6 +109,17 @@ const EditCar = ({ car }) => {
           />
         </View>
       )}
+      {showImageSelector && (
+        <ImageSelector
+          car={null}
+          setImageBase64={setImageBase64}
+          imageBase64={imageBase64}
+        />
+      )}
+      <View style={styles.actions}>
+        <Button title="Discard" onPress={onDiscardCar} color="red" />
+        <Button title="Save" onPress={onSaveCar} disabled={saveDisabled} />
+      </View>
     </View>
   )
 }
