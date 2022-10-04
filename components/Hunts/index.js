@@ -51,13 +51,19 @@ export default function Hunts({
   }
 
   const renderHeader = () => {
-    const { title, description, created_at: createdAt } = hunt
+    const {
+      title,
+      description,
+      created_at: createdAt,
+      user: { username },
+    } = hunt
     const formattedDate = formatHuntDate(createdAt)
     return (
       <View style={styles.topInfo}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
         <Text style={styles.createdAt}>{formattedDate}</Text>
+        <Text style={styles.username}>{username}</Text>
       </View>
     )
   }
