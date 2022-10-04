@@ -15,6 +15,7 @@ import { updateHunt, createHunt, deleteHunt } from '../../requests/hunts'
 import { deleteCar } from '../../requests/cars'
 import styles from './styles/editHuntModal'
 import Alert from '../common/Alert'
+import LocationSelector from './locationSelector'
 
 const EditHuntModal = ({
   visible,
@@ -26,21 +27,27 @@ const EditHuntModal = ({
   fetchHunts,
   navigation,
 }) => {
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
+  const [title, setTitle] = useState(hunt?.title || '')
+  const [description, setDescription] = useState(hunt?.description || '')
+  const [location, setLocation] = useState({
+    latitude: hunt?.latitude,
+    longitude: hunt?.longitude,
+  })
   const [editing, setEditing] = useState(false)
 
   useEffect(() => {
-    if (visible && hunt) setHuntDetails()
-  }, [visible])
+    if (hunt) setHuntDetails()
+  }, [hunt])
 
   const setHuntDetails = () => {
     setTitle(hunt?.title || '')
     setDescription(hunt?.description || '')
+    setLocation({ latitude: hunt?.latitude, longitude: hunt?.longitude })
   }
 
   const onSave = async () => {
-    const huntProps = { title, description }
+    const { latitude, longitude } = location
+    const huntProps = { title, description, latitude, longitude }
     try {
       if (hunt?.id) {
         const cars = [...hunt?.cars, ...tempCars]
@@ -143,7 +150,11 @@ const EditHuntModal = ({
   }
 
   const headerText = `Cars${tempCars.length ? ` (${tempCars.length})` : ''}`
-  const saveDisabled = !tempCars.length || !title.length
+  const saveDisabled =
+    !tempCars.length ||
+    !title.length ||
+    !location.latitude ||
+    !location.longitude
   const topRightButtonLabel = hunt ? 'Save' : 'Create'
 
   return (
@@ -176,6 +187,11 @@ const EditHuntModal = ({
             />
           </View>
         </View>
+        <LocationSelector
+          hunt={hunt}
+          location={location}
+          setLocation={setLocation}
+        />
         <View style={styles.carsHeader}>
           <Text style={styles.headerText}>{headerText}</Text>
           <TouchableOpacity onPress={addCar} style={styles.addCarButton}>

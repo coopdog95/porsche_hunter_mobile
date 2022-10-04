@@ -4,6 +4,7 @@ import { getHuntById } from '../../requests/hunts'
 import { formatHuntDate } from '../../services/serializeDate'
 import CarListItem from './carListItem'
 import EditHuntModal from './editHuntModal'
+import LocationSelector from './locationSelector'
 import styles from './styles'
 
 export default function Hunts({
@@ -33,6 +34,7 @@ export default function Hunts({
   const updateCars = newCars => setTempCars(newCars)
 
   const renderHunt = () => {
+    const huntLocation = { latitude: hunt.latitude, longitude: hunt.longitude }
     return (
       <ScrollView style={styles.scrollView}>
         {huntOwner && (
@@ -45,6 +47,7 @@ export default function Hunts({
           </View>
         )}
         {renderHeader()}
+        <LocationSelector editable={false} location={huntLocation} />
         {renderCars()}
       </ScrollView>
     )

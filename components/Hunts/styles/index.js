@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   editButton: {
-    // height: 50,
     backgroundColor: '#007AFF',
     marginTop: 2,
     marginBottom: 10,
@@ -44,6 +43,15 @@ const styles = StyleSheet.create({
   createdAt: {
     fontSize: 15,
     fontWeight: '300',
+  },
+  locationSelector: {
+    height: 300,
+    flex: 1,
+    marginBottom: 10,
+  },
+  map: {
+    flex: 1,
+    borderRadius: 10,
   },
 })
 
