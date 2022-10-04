@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    // paddingHorizontal: 5,
     padding: 5,
     marginVertical: 5,
   },
