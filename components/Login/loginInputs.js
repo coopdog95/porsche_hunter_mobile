@@ -6,9 +6,12 @@ const LoginInputs = ({
   username,
   onSubmit,
   password,
+  confirmedPassword,
   passwordInputRef,
   setUsername,
   setPassword,
+  setConfirmedPassword,
+  creatingAccount,
 }) => {
   const generateInputProps = inputType => {
     let inputProps = {
@@ -71,6 +74,16 @@ const LoginInputs = ({
       <View style={styles.loginTextArea}>
         <TextInput {...generateInputProps('password')} />
       </View>
+      {creatingAccount && (
+        <View style={styles.loginTextArea}>
+          <TextInput
+            {...generateInputProps('password')}
+            value={confirmedPassword}
+            onChangeText={setConfirmedPassword}
+            placeholder="Confirm Password"
+          />
+        </View>
+      )}
     </View>
   )
 }

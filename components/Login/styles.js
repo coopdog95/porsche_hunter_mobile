@@ -59,6 +59,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  button: {
+    backgroundColor: '#007AFF',
+    width: '86%',
+    borderRadius: 30,
+    marginVertical: 5,
+  },
+  createAccountButton: {
+    position: 'absolute',
+    bottom: 20,
+    backgroundColor: 'white',
+    borderColor: '#007AFF',
+    borderWidth: 1,
+  },
 })
 
 export default styles

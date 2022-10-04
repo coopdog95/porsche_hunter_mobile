@@ -17,6 +17,8 @@ import styles from './styles'
 export default function Login({ setAuthenticated, setUserId }) {
   const [username, setUsername] = useState('cooper2')
   const [password, setPassword] = useState('password')
+  const [confirmedPassword, setConfirmedPassword] = useState('')
+  const [creatingAccount, setCreatingAccount] = useState(false)
   const [authenticating, setAuthenticating] = useState(false)
 
   const passwordRef = useRef()
@@ -40,10 +42,17 @@ export default function Login({ setAuthenticated, setUserId }) {
 
   const handleLogin = async e => {
     e.preventDefault()
+    if (creatingAccount && password !== confirmedPassword)
+      return loginAlert('Passwords do not match')
     try {
       setAuthenticating(true)
-      const { user } = await postUserLogin(username, password)
-      setUserId(user.id)
+      if (creatingAccount) {
+        const { user } = await createNewUser(username, password)
+        setUserId(user.id)
+      } else {
+        const { user } = await postUserLogin(username, password)
+        setUserId(user.id)
+      }
       setAuthenticating(false)
       setAuthenticated(true)
     } catch (error) {
@@ -67,7 +76,11 @@ export default function Login({ setAuthenticated, setUserId }) {
       confirmText: 'Ok',
     })
 
-  const loginDisabled = !username.length || !password.length
+  const loginDisabled =
+    !username.length ||
+    !password.length ||
+    (creatingAccount && !confirmedPassword.length)
+  const loginTitle = creatingAccount ? 'Create Account and Login' : 'Login'
 
   return authenticating ? (
     <View style={styles.fullScreenSpinner}>
@@ -83,12 +96,32 @@ export default function Login({ setAuthenticated, setUserId }) {
         <LoginInputs
           username={username}
           password={password}
+          confirmedPassword={confirmedPassword}
           setUsername={setUsername}
           setPassword={setPassword}
+          setConfirmedPassword={setConfirmedPassword}
+          creatingAccount={creatingAccount}
           passwordInputRef={passwordRef}
           onSubmit={onSubmit}
         />
-        <Button title="Login" onPress={handleLogin} disabled={loginDisabled} />
+        <View style={styles.button}>
+          <Button
+            title={loginTitle}
+            onPress={handleLogin}
+            disabled={loginDisabled}
+            color="white"
+          />
+        </View>
+        {!creatingAccount && (
+          <View style={{ ...styles.button, ...styles.createAccountButton }}>
+            <Button
+              title="Create an account"
+              onPress={() => setCreatingAccount(true)}
+              disabled={loginDisabled}
+              color="#007AFF"
+            />
+          </View>
+        )}
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   )
