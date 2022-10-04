@@ -15,6 +15,18 @@ const styles = StyleSheet.create({
     marginTop: 5,
     borderRadius: 8,
   },
+  emptyHunts: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+  },
+  emptyHuntsText: {
+    fontSize: 20,
+    flex: 1,
+  },
 })
 
 export default styles

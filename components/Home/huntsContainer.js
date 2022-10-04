@@ -10,6 +10,12 @@ const HuntsContainer = ({ hunts, navigation }) => {
     <HuntListItem hunt={hunt} navigation={navigation} />
   )
 
+  const emptyComponent = (
+    <View style={styles.emptyHunts}>
+      <Text style={styles.emptyHuntsText}>No hunts found</Text>
+    </View>
+  )
+
   return (
     <View style={styles.huntsContainer}>
       <FlatList
@@ -17,6 +23,7 @@ const HuntsContainer = ({ hunts, navigation }) => {
         data={hunts}
         keyExtractor={hunt => `${hunt.id}`}
         style={{ flex: 1 }}
+        ListEmptyComponent={emptyComponent}
       />
     </View>
   )
