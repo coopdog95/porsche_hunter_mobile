@@ -9,6 +9,7 @@ import styles from './styles'
 export default function Hunts({
   navigation,
   userId,
+  fetchHunts,
   route: {
     params: { huntId },
   },
@@ -79,6 +80,7 @@ export default function Hunts({
         updateCars={updateCars}
         tempCars={tempCars}
         fetchHunt={fetchHunt}
+        fetchHunts={fetchHunts}
       />
     </View>
   )
