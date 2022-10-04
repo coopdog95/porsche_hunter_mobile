@@ -57,18 +57,24 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   carListItem: {
-    height: 75,
+    // height: 100,
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 7,
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
-    paddingHorizontal: 5,
+    // paddingHorizontal: 5,
+    padding: 5,
     marginVertical: 5,
   },
   carListItemDetails: {
     display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    flex: 3,
+  },
+  carListItemText: {
     flexDirection: 'column',
     justifyContent: 'space-around',
     flex: 3,
@@ -85,6 +91,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     height: 70,
     width: 70,
+  },
+  carListItemDeleteButton: {
+    flex: 1,
+    backgroundColor: 'red',
+    width: '100%',
+    borderRadius: 7,
+    marginTop: 5,
+  },
+  carsContainer: {
+    flex: 1,
+  },
+  scrollView: {
+    flex: 1,
   },
 })
 

@@ -5,12 +5,26 @@ import {
   TextInput,
   Text,
   View,
+  Image,
+  Button,
 } from 'react-native'
-import styles from './styles/editHuntModal'
 import FullScreenModal from '../common/FullScreenModal'
 import EditCar from './editCar'
+import { models, trimsByModel } from '../../services/vehicleData'
+import { updateHunt, createHunt } from '../../requests/hunts'
+import { deleteCar } from '../../requests/cars'
+import styles from './styles/editHuntModal'
+import Alert from '../common/Alert'
 
-const EditHuntModal = ({ visible, toggleModal, hunt }) => {
+const EditHuntModal = ({
+  visible,
+  toggleModal,
+  hunt,
+  updateCars,
+  tempCars,
+  fetchHunt,
+  fetchHunts,
+}) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [editing, setEditing] = useState(false)
@@ -25,8 +39,25 @@ const EditHuntModal = ({ visible, toggleModal, hunt }) => {
   }
 
   const onSave = async () => {
-    console.log('saving...', hunt?.id)
-    toggleModal(false)
+    const huntProps = { title, description }
+    try {
+      if (hunt?.id) {
+        const cars = [...hunt?.cars, ...tempCars]
+        await updateHunt(hunt.id, huntProps, cars)
+      } else {
+        await createHunt(huntProps, tempCars)
+      }
+      await fetchHunt()
+      await fetchHunts()
+      toggleModal(false)
+    } catch (error) {
+      Alert({
+        titleText: 'Save error',
+        bodyText: error.message,
+        noCancel: true,
+        confirmText: 'Ok',
+      })
+    }
   }
 
   const addCar = () => {
@@ -34,16 +65,77 @@ const EditHuntModal = ({ visible, toggleModal, hunt }) => {
     setEditing(true)
   }
 
-  const headerText = `Cars${hunt?.cars.length ? ` (${hunt.cars.length})` : ''}`
+  const onDeleteCar = async carId => {
+    try {
+      await deleteCar(carId)
+      await fetchHunt()
+      Alert({
+        titleText: 'Car deleted',
+        bodyText: 'Car successfully deleted',
+        noCancel: true,
+        confirmText: 'Ok',
+      })
+    } catch (error) {
+      Alert({
+        titleText: 'Delete error',
+        bodyText: error.message,
+        noCancel: true,
+        confirmText: 'Ok',
+      })
+    }
+  }
+
+  const getModelLabel = car =>
+    models.find(model => model.value === car.model)?.label || car.model
+
+  const getTrimLabel = car =>
+    trimsByModel[car.model]?.find(trim => trim.value === car.trim)?.label ||
+    car.trim
+
+  const renderCar = (car, index) => (
+    <View key={car.id || `new-${index}`} style={styles.carListItem}>
+      <View style={styles.carListItemDetails}>
+        <View style={styles.carListItemText}>
+          <Text style={styles.carListItemModel}>{getModelLabel(car)}</Text>
+          <Text style={styles.carListItemTrim}>{getTrimLabel(car)}</Text>
+        </View>
+        <Image
+          style={styles.carListItemImage}
+          source={{ uri: car.image_data || car.image_url }}
+          resizeMode="cover"
+        />
+      </View>
+      {car.id ? (
+        <View style={styles.carListItemDeleteButton}>
+          <Button
+            title="Delete"
+            onPress={() => onDeleteCar(car.id)}
+            color="white"
+          />
+        </View>
+      ) : null}
+    </View>
+  )
+
+  const onClose = () => {
+    updateCars(hunt?.cars)
+    setHuntDetails()
+    toggleModal(false)
+  }
+
+  const headerText = `Cars${tempCars.length ? ` (${tempCars.length})` : ''}`
+  const saveDisabled = !tempCars.length || !title.length
+  const topRightButtonLabel = hunt ? 'Save' : 'Create'
 
   return (
     <FullScreenModal
       visible={visible}
       toggleModal={toggleModal}
       topLeftButtonLabel="Close"
-      topLeftButtonOnClick={() => toggleModal(false)}
-      topRightButtonLabel="Save"
+      topLeftButtonOnClick={onClose}
+      topRightButtonLabel={topRightButtonLabel}
       topRightButtonOnClick={onSave}
+      topRightButtonDisabled={saveDisabled}
     >
       <View style={styles.container}>
         <View style={styles.textInputs}>
@@ -68,15 +160,23 @@ const EditHuntModal = ({ visible, toggleModal, hunt }) => {
         <View style={styles.carsHeader}>
           <Text style={styles.headerText}>{headerText}</Text>
           <TouchableOpacity onPress={addCar} style={styles.addCarButton}>
-            <Text style={styles.addCarText}>{`+`}</Text>
+            <Text style={styles.addCarText}>+</Text>
           </TouchableOpacity>
         </View>
-        <View>
+        <View style={styles.carsContainer}>
           {editing && (
             <View style={styles.editCarContainer}>
-              <EditCar car={null} />
+              <EditCar
+                car={null}
+                toggleEditing={setEditing}
+                updateCars={updateCars}
+                cars={tempCars}
+              />
             </View>
           )}
+          <ScrollView style={styles.scrollView}>
+            {tempCars.map(renderCar)}
+          </ScrollView>
         </View>
       </View>
     </FullScreenModal>
