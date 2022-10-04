@@ -28,7 +28,7 @@ export default function Login({ setAuthenticated, setUserId }) {
     const {
       nativeEvent: { text },
     } = event
-    if (!text || !text.length) return
+    if (!text?.length) return
     switch (inputType) {
       case 'email':
         return passwordRef.current?.focus()
@@ -81,6 +81,7 @@ export default function Login({ setAuthenticated, setUserId }) {
     !password.length ||
     (creatingAccount && !confirmedPassword.length)
   const loginTitle = creatingAccount ? 'Create Account and Login' : 'Login'
+  const createAccountTitle = creatingAccount ? 'Cancel' : 'Create an account'
 
   return authenticating ? (
     <View style={styles.fullScreenSpinner}>
@@ -112,16 +113,13 @@ export default function Login({ setAuthenticated, setUserId }) {
             color="white"
           />
         </View>
-        {!creatingAccount && (
-          <View style={{ ...styles.button, ...styles.createAccountButton }}>
-            <Button
-              title="Create an account"
-              onPress={() => setCreatingAccount(true)}
-              disabled={loginDisabled}
-              color="#007AFF"
-            />
-          </View>
-        )}
+        <View style={{ ...styles.button, ...styles.createAccountButton }}>
+          <Button
+            title={createAccountTitle}
+            onPress={() => setCreatingAccount(!creatingAccount)}
+            color="#007AFF"
+          />
+        </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   )
