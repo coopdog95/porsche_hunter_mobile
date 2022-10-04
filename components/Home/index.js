@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import HuntsContainer from './huntsContainer'
 import Spinner from '../common/Spinner'
 import styles from './styles'
-import { getAllHunts } from '../../requests/hunts'
+import EditHuntModal from '../Hunts/editHuntModal'
 
-const Home = ({ navigation }) => {
-  const [loadingHunts, setLoadingHunts] = useState(false)
-  const [hunts, setHunts] = useState(null)
+const Home = ({ navigation, hunts, fetchHunts, loadingHunts }) => {
+  const [modalOpen, setModalOpen] = useState(null)
+  const [tempCars, setTempCars] = useState([])
 
   useEffect(() => {
     fetchHunts()
   }, [])
-
-  const fetchHunts = async () => {
-    setLoadingHunts(true)
-    const fetchedHunts = await getAllHunts()
-    setHunts(fetchedHunts)
-    setLoadingHunts(false)
-  }
 
   return (
     <View style={styles.container}>
@@ -27,8 +20,23 @@ const Home = ({ navigation }) => {
           <Spinner />
         </View>
       ) : (
-        <View style={styles.hunts}>
+        <View style={{ flex: 1, paddingBottom: 20 }}>
+          <View style={styles.createHuntButton}>
+            <Button
+              title="Create Hunt"
+              onPress={() => setModalOpen(true)}
+              color="white"
+            />
+          </View>
           <HuntsContainer hunts={hunts} navigation={navigation} />
+          <EditHuntModal
+            visible={modalOpen}
+            hunt={null}
+            toggleModal={setModalOpen}
+            fetchHunt={fetchHunts}
+            tempCars={tempCars}
+            updateCars={setTempCars}
+          />
         </View>
       )}
     </View>

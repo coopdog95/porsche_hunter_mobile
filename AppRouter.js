@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { enableScreens } from 'react-native-screens'
+import { getAllHunts } from './requests/hunts'
 
 import Account from './components/Account'
 import Home from './components/Home'
@@ -18,6 +19,16 @@ export default function AppRouter({
   userId,
   setUserId,
 }) {
+  const [hunts, setHunts] = useState(null)
+  const [loadingHunts, setLoadingHunts] = useState(false)
+
+  const fetchHunts = async () => {
+    setLoadingHunts(true)
+    const fetchedHunts = await getAllHunts()
+    setHunts(fetchedHunts)
+    setLoadingHunts(false)
+  }
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
@@ -35,9 +46,21 @@ export default function AppRouter({
             </Screen>
           ) : (
             <>
-              <Screen name="Home" component={Home} />
-              <Screen name="Hunts">
-                {props => <Hunts {...props} userId={userId} />}
+              <Screen name="Home">
+                {props => (
+                  <Home
+                    {...props}
+                    hunts={hunts}
+                    setHunts={setHunts}
+                    fetchHunts={fetchHunts}
+                    loadingHunts={loadingHunts}
+                  />
+                )}
+              </Screen>
+              <Screen name="Hunts" options={{ title: 'Hunt' }}>
+                {props => (
+                  <Hunts {...props} userId={userId} fetchHunts={fetchHunts} />
+                )}
               </Screen>
               <Screen name="Account" component={Account} />
             </>
