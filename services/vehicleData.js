@@ -8,7 +8,6 @@ export const models = [
   { value: 'cayenne', label: 'Cayenne' },
 ]
 
-// TODO: add more models for panamera + cayenne
 export const trimsByModel = {
   718: [
     { value: 'cayman', label: 'Cayman' },
@@ -65,9 +64,28 @@ export const trimsByModel = {
   panamera: [
     { value: 'none', label: 'none' },
     { value: '4s', label: '4s' },
+    { value: 'platinum_edition', label: 'Platinum Edition' },
+    { value: '4', label: '4' },
+    { value: '4_platinum_edition', label: '4 Platinum Edition' },
+    { value: '4_exec', label: '4 Executive' },
+    { value: '4_st', label: '4 Sport Turismo' },
+    { value: '4s_exec', label: '4S Executive' },
+    { value: '4s_st', label: '4S Sport Turismo' },
+    { value: '4_eh', label: '4 E-Hybrid' },
+    { value: '4_eh_platinum_edition', label: '4 E-Hybrid Platinum Edition' },
+    { value: '4_eh_exec', label: '4 E-Hybrid Executive' },
+    { value: '4_eh_st', label: '4 E-Hybrid Sport Turismo' },
+    { value: '4s_eh', label: '4S E-Hybrid' },
+    { value: '4s_eh_exec', label: '4S E-Hybrid Executive' },
+    { value: '4s_eh_st', label: '4S E-Hybrid Sport Turismo' },
     { value: 'gts', label: 'GTS' },
-    { value: 'turbo', label: 'Turbo' },
+    { value: 'gts_st', label: 'GTS Sport Turismo' },
     { value: 'turbo_s', label: 'Turbo S' },
+    { value: 'turbo_s_exec', label: 'Turbo S Executive' },
+    { value: 'turbo_s_st', label: 'Turbo S Sport Turismo' },
+    { value: 'turbo_s_eh', label: 'Turbo S E-Hybrid' },
+    { value: 'turbo_s_eh_exec', label: 'Turbo S E-Hybrid Executive' },
+    { value: 'turbo_s_eh_st', label: 'Turbo S E-Hybrid Sport Turismo' },
   ],
   macan: [
     { value: 'none', label: 'none' },
@@ -80,5 +98,24 @@ export const trimsByModel = {
     { value: 's', label: 'S' },
     { value: 't', label: 'T' },
     { value: 'gts', label: 'GTS' },
+    { value: 'platinum_edition', label: 'Platinum Edition' },
+    { value: 'coupe', label: 'Coupe' },
+    { value: 'coupe_platinum_edition', label: 'Coupe Platinum Edition' },
+    { value: 'eh', label: 'E-Hybrid' },
+    { value: 'eh_platinum_edition', label: 'E-Hybrid Platinum Edition' },
+    { value: 'eh_coupe', label: 'E-Hybrid Coupe' },
+    {
+      value: 'eh_coupe_platinum_edition',
+      label: 'E-Hybrid Coupe Platinum Edition',
+    },
+    { value: 's_platinum_edition', label: 'S Platinum Edition' },
+    { value: 's_coupe', label: 'S Coupe' },
+    { value: 's_coupe_platinum_edition', label: 'S Coupe Platinum Edition' },
+    { value: 'gts_coupe', label: 'GTS Coupe' },
+    { value: 'turbo', label: 'Turbo' },
+    { value: 'turbo_coupe', label: 'Turbo Coupe' },
+    { value: 'turbo_s_eh', label: 'Turbo S E-Hybrid' },
+    { value: 'turbo_s_eh_coupe', label: 'Turbo S E-Hybrid Coupe' },
+    { value: 'turbo_gt', label: 'Turbo GT' },
   ],
 }
