@@ -94,6 +94,7 @@ const EditCar = ({ car, toggleEditing, cars, updateCars }) => {
           value={model.value}
           onSelectItem={onSelectModel}
           placeholder="Select Porsche Model"
+          listMode="SCROLLVIEW"
         />
       </View>
       {model?.value !== 'none' && (
@@ -106,6 +107,7 @@ const EditCar = ({ car, toggleEditing, cars, updateCars }) => {
             value={trim.value}
             onSelectItem={onSelectTrim}
             placeholder={`Select ${model.value} Trim`}
+            listMode="SCROLLVIEW"
           />
         </View>
       )}

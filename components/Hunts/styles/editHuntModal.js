@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
   deleteHuntButton: {
     backgroundColor: 'red',
     borderRadius: 8,
+    marginTop: 50,
   },
   emptyCars: {
     display: 'flex',

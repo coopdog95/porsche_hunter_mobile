@@ -36,8 +36,9 @@ const EditHuntModal = ({
   const [editing, setEditing] = useState(false)
 
   useEffect(() => {
-    if (hunt) setHuntDetails()
-  }, [hunt])
+    setHuntDetails()
+    if (!visible) setEditing(false)
+  }, [visible])
 
   const setHuntDetails = () => {
     setTitle(hunt?.title || '')
@@ -167,7 +168,7 @@ const EditHuntModal = ({
       topRightButtonOnClick={onSave}
       topRightButtonDisabled={saveDisabled}
     >
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.textInputs}>
           <View style={styles.textArea}>
             <TextInput
@@ -210,9 +211,7 @@ const EditHuntModal = ({
             </View>
           )}
           {tempCars?.length ? (
-            <ScrollView style={styles.scrollView}>
-              {tempCars.map(renderCar)}
-            </ScrollView>
+            tempCars.map(renderCar)
           ) : (
             <View style={styles.emptyCars}>
               <Text style={{ fontSize: 18 }}>No cars added</Text>
@@ -224,7 +223,7 @@ const EditHuntModal = ({
             <Button title="Delete Hunt" onPress={onDeleteHunt} color="white" />
           </View>
         )}
-      </View>
+      </ScrollView>
     </FullScreenModal>
   )
 }
