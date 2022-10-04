@@ -27,11 +27,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: 'green',
     width: '100%',
   },
   title: {
-    fontSize: 17,
+    fontSize: 19,
     fontWeight: 'bold',
     textAlign: 'left',
   },
@@ -41,6 +40,9 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    backgroundColor: 'lightgrey',
+    borderRadius: 5,
+    overflow: 'hidden',
   },
   scrollView: {
     justifyContent: 'flex-start',
