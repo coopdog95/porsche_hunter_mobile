@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 220,
     shadowColor: 'black',
     shadowOffset: {
       width: 0,
@@ -54,7 +53,6 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 8,
     height: 50,
-    // backgroundColor: 'yellow',
   },
   user: {
     display: 'flex',
