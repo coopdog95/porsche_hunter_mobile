@@ -37,7 +37,7 @@ const CarListItem = ({ car: { model, trim, image_url: imageUrl } }) => {
         swipeToClose
         topLeftButtonLabel="Close"
         toggleModal={setModalOpen}
-        paddingHorizontal={0}
+        paddingHorizontal={10}
         topLeftButtonOnClick={() => setModalOpen(false)}
       >
         <View style={styles.modalImageContainer}>

@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     width: '100%',
-    bottom: 0,
+    bottom: 7,
     color: 'white',
     paddingLeft: 10,
   },
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 5,
     paddingLeft: 5,
+    paddingTop: 5,
     borderRadius: 8,
   },
   modelName: {
