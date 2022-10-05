@@ -63,6 +63,7 @@ export default function AppRouter({
                 {props => (
                   <Home
                     {...props}
+                    userId={userId}
                     hunts={hunts}
                     setHunts={setHunts}
                     fetchHunts={fetchHunts}

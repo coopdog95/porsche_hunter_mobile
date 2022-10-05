@@ -3,9 +3,9 @@ import { View, Text, FlatList } from 'react-native'
 import HuntListItem from '../Hunts/huntListItem'
 import styles from './styles'
 
-const HuntsContainer = ({ hunts, navigation }) => {
+const HuntsContainer = ({ hunts, navigation, userId }) => {
   const renderItem = ({ item: hunt }) => (
-    <HuntListItem hunt={hunt} navigation={navigation} />
+    <HuntListItem hunt={hunt} navigation={navigation} userId={userId} />
   )
 
   const emptyComponent = (

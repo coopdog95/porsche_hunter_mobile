@@ -5,7 +5,11 @@ import { formatHuntDate } from '../../services/serializeDate'
 import CarListItem from './carListItem'
 import EditHuntModal from './editHuntModal'
 import LocationSelector from './locationSelector'
+import Avatar from '../common/Avatar'
 import styles from './styles'
+
+const red = '#a22b33'
+const yellow = '#c1914a'
 
 export default function Hunts({
   navigation,
@@ -58,15 +62,28 @@ export default function Hunts({
       title,
       description,
       created_at: createdAt,
-      user: { username },
+      user: { id: huntUserId, username },
     } = hunt
     const formattedDate = formatHuntDate(createdAt)
+    const avatarColor = huntUserId === userId ? red : yellow
+    const avatarTextColor = huntUserId === userId ? 'white' : 'black'
     return (
       <View style={styles.topInfo}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
-        <Text style={styles.createdAt}>{formattedDate}</Text>
-        <Text style={styles.username}>{username}</Text>
+        <View style={styles.bottomRow}>
+          <View style={styles.user}>
+            <Avatar
+              name={username}
+              diameter={25}
+              textColor={avatarTextColor}
+              backgroundColor={avatarColor}
+              fontSize={15}
+            />
+            <Text style={styles.username}>{username}</Text>
+          </View>
+          <Text style={styles.createdAt}>{formattedDate}</Text>
+        </View>
       </View>
     )
   }

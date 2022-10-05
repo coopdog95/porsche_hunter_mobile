@@ -40,10 +40,28 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 20,
+    marginBottom: 10,
   },
   createdAt: {
     fontSize: 15,
     fontWeight: '300',
+  },
+  bottomRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  user: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  username: {
+    fontWeight: 'bold',
+    color: '#444444',
+    marginLeft: 5,
   },
   locationSelector: {
     height: 300,

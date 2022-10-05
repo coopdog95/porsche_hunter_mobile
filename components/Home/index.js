@@ -5,7 +5,7 @@ import Spinner from '../common/Spinner'
 import styles from './styles'
 import EditHuntModal from '../Hunts/editHuntModal'
 
-const Home = ({ navigation, hunts, fetchHunts, loadingHunts }) => {
+const Home = ({ userId, navigation, hunts, fetchHunts, loadingHunts }) => {
   const [modalOpen, setModalOpen] = useState(null)
   const [tempCars, setTempCars] = useState([])
 
@@ -28,7 +28,11 @@ const Home = ({ navigation, hunts, fetchHunts, loadingHunts }) => {
               color="white"
             />
           </View>
-          <HuntsContainer hunts={hunts} navigation={navigation} />
+          <HuntsContainer
+            hunts={hunts}
+            navigation={navigation}
+            userId={userId}
+          />
           <EditHuntModal
             visible={modalOpen}
             hunt={null}
