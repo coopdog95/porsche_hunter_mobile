@@ -114,6 +114,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     height: 200,
   },
+  spinner: {
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 })
 
 export default styles

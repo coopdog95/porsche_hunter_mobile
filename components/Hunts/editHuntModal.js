@@ -13,9 +13,10 @@ import EditCar from './editCar'
 import { models, trimsByModel } from '../../services/vehicleData'
 import { updateHunt, createHunt, deleteHunt } from '../../requests/hunts'
 import { deleteCar } from '../../requests/cars'
-import styles from './styles/editHuntModal'
 import Alert from '../common/Alert'
+import Spinner from '../common/Spinner'
 import LocationSelector from './locationSelector'
+import styles from './styles/editHuntModal'
 
 const EditHuntModal = ({
   visible,
@@ -29,6 +30,7 @@ const EditHuntModal = ({
 }) => {
   const [title, setTitle] = useState(hunt?.title || '')
   const [description, setDescription] = useState(hunt?.description || '')
+  const [saving, setSaving] = useState(false)
   const [location, setLocation] = useState({
     latitude: hunt?.latitude,
     longitude: hunt?.longitude,
@@ -49,6 +51,7 @@ const EditHuntModal = ({
   const onSave = async () => {
     const { latitude, longitude } = location
     const huntProps = { title, description, latitude, longitude }
+    setSaving(true)
     try {
       if (hunt?.id) {
         const cars = [...hunt?.cars, ...tempCars]
@@ -56,10 +59,12 @@ const EditHuntModal = ({
       } else {
         await createHunt(huntProps, tempCars)
       }
+      setSaving(false)
       await fetchHunt()
       await fetchHunts()
       toggleModal(false)
     } catch (error) {
+      setSaving(false)
       Alert({
         titleText: 'Save error',
         bodyText: error.message,
@@ -152,6 +157,7 @@ const EditHuntModal = ({
 
   const headerText = `Cars${tempCars.length ? ` (${tempCars.length})` : ''}`
   const saveDisabled =
+    saving ||
     !tempCars.length ||
     !title.length ||
     !location.latitude ||
@@ -168,62 +174,72 @@ const EditHuntModal = ({
       topRightButtonOnClick={onSave}
       topRightButtonDisabled={saveDisabled}
     >
-      <ScrollView style={styles.container}>
-        <View style={styles.textInputs}>
-          <View style={styles.textArea}>
-            <TextInput
-              style={styles.textInput}
-              value={title}
-              placeholder="Title"
-              onChangeText={setTitle}
-            />
-          </View>
-          <View style={styles.textArea}>
-            <TextInput
-              style={styles.textInput}
-              value={description}
-              placeholder="Description (optional)"
-              onChangeText={setDescription}
-              numberOfLines={3}
-            />
-          </View>
+      {saving ? (
+        <View style={styles.spinner}>
+          <Spinner />
         </View>
-        <LocationSelector
-          hunt={hunt}
-          location={location}
-          setLocation={setLocation}
-        />
-        <View style={styles.carsHeader}>
-          <Text style={styles.headerText}>{headerText}</Text>
-          <TouchableOpacity onPress={addCar} style={styles.addCarButton}>
-            <Text style={styles.addCarText}>+</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.carsContainer}>
-          {editing && (
-            <View style={styles.editCarContainer}>
-              <EditCar
-                car={null}
-                toggleEditing={setEditing}
-                updateCars={updateCars}
-                cars={tempCars}
+      ) : (
+        <ScrollView style={styles.container}>
+          <View style={styles.textInputs}>
+            <View style={styles.textArea}>
+              <TextInput
+                style={styles.textInput}
+                value={title}
+                placeholder="Title"
+                onChangeText={setTitle}
+              />
+            </View>
+            <View style={styles.textArea}>
+              <TextInput
+                style={styles.textInput}
+                value={description}
+                placeholder="Description (optional)"
+                onChangeText={setDescription}
+                numberOfLines={3}
+              />
+            </View>
+          </View>
+          <LocationSelector
+            hunt={hunt}
+            location={location}
+            setLocation={setLocation}
+          />
+          <View style={styles.carsHeader}>
+            <Text style={styles.headerText}>{headerText}</Text>
+            <TouchableOpacity onPress={addCar} style={styles.addCarButton}>
+              <Text style={styles.addCarText}>+</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.carsContainer}>
+            {editing && (
+              <View style={styles.editCarContainer}>
+                <EditCar
+                  car={null}
+                  toggleEditing={setEditing}
+                  updateCars={updateCars}
+                  cars={tempCars}
+                />
+              </View>
+            )}
+            {tempCars?.length ? (
+              tempCars.map(renderCar)
+            ) : (
+              <View style={styles.emptyCars}>
+                <Text style={{ fontSize: 18 }}>No cars added</Text>
+              </View>
+            )}
+          </View>
+          {hunt?.id && (
+            <View style={styles.deleteHuntButton}>
+              <Button
+                title="Delete Hunt"
+                onPress={onDeleteHunt}
+                color="white"
               />
             </View>
           )}
-          {tempCars?.length ? (
-            tempCars.map(renderCar)
-          ) : (
-            <View style={styles.emptyCars}>
-              <Text style={{ fontSize: 18 }}>No cars added</Text>
-            </View>
-          )}
-        </View>
-        {hunt?.id && (
-          <View style={styles.deleteHuntButton}>
-            <Button title="Delete Hunt" onPress={onDeleteHunt} color="white" />
-          </View>
-        )}
-      </ScrollView>
+        </ScrollView>
+      )}
     </FullScreenModal>
   )
 }
