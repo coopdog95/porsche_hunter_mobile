@@ -1,6 +1,5 @@
 import Constants from 'expo-constants'
 import * as Device from 'expo-device'
-import { API_BASE_URL } from '@env'
 const {
   manifest: { packagerOpts, debuggerHost },
 } = Constants
@@ -16,6 +15,7 @@ const getApi = () => {
     return 'http://'.concat(localIpAddress)
   }
 
+  const API_BASE_URL = 'https://porsche-hunter.herokuapp.com'
   return API_BASE_URL
 }
 
