@@ -4,8 +4,6 @@ import HuntListItem from '../Hunts/huntListItem'
 import styles from './styles'
 
 const HuntsContainer = ({ hunts, navigation }) => {
-  console.log('hunts', hunts)
-
   const renderItem = ({ item: hunt }) => (
     <HuntListItem hunt={hunt} navigation={navigation} />
   )

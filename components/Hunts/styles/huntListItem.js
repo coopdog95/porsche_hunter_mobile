@@ -25,15 +25,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
-    borderBottomColor: 'lightgrey',
-    borderBottomWidth: 0.5,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    marginTop: 5,
   },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'left',
-    paddingHorizontal: 5,
-    paddingVertical: 5,
   },
   carImages: {
     display: 'flex',
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     padding: 5,
     marginHorizontal: 5,
-    marginVertical: 10,
+    marginTop: 5,
   },
   bottomRow: {
     display: 'flex',
@@ -53,12 +52,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    paddingHorizontal: 5,
-    paddingVertical: 5,
+    paddingHorizontal: 8,
+    height: 50,
+    // backgroundColor: 'yellow',
+  },
+  user: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   username: {
     fontWeight: 'bold',
     color: '#444444',
+    marginLeft: 5,
   },
 })
 
