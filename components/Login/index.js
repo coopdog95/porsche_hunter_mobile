@@ -15,8 +15,8 @@ import { postUserLogin, createNewUser } from '../../requests/users'
 import styles from './styles'
 
 export default function Login({ setAuthenticated, setUserId }) {
-  const [username, setUsername] = useState('cooper2')
-  const [password, setPassword] = useState('password')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [confirmedPassword, setConfirmedPassword] = useState('')
   const [creatingAccount, setCreatingAccount] = useState(false)
   const [authenticating, setAuthenticating] = useState(false)
