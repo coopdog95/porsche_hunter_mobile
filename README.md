@@ -14,6 +14,7 @@ Download the `Expo Go` app for iOS, and [click here from your device](exp://exp.
 
 - Created using React Native v0.69 & Expo v46.
 - Node.js backend + Postgres database hosted on Heroku
+- AWS S3 Bucket used for storing images
 
 #### Running Locally
 
