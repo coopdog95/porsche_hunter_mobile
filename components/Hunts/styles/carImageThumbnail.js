@@ -2,14 +2,15 @@ import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
-    height: 130,
-    width: 130,
-    backgroundColor: 'red',
+    height: 120,
+    width: 120,
     marginRight: 7,
+    backgroundColor: 'lightgrey',
   },
   image: {
     height: '100%',
     width: '100%',
+    borderRadius: 8,
   },
 })
 

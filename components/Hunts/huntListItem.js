@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, Text, TouchableHighlight, View } from 'react-native'
+import { Text, TouchableHighlight, View } from 'react-native'
 import { formatHuntDate } from '../../services/serializeDate'
 import CarImageThumbnail from './carImageThumbnail'
 import styles from './styles/huntListItem'
@@ -30,19 +30,9 @@ const HuntListItem = ({
         <View style={styles.header}>
           <Text style={styles.title}>{title}</Text>
         </View>
-        {cars?.length > 2 ? (
-          <ScrollView
-            contentContainerStyle={styles.scrollView}
-            horizontal={true}
-          >
-            {mappedThumbnails()}
-          </ScrollView>
-        ) : (
-          <View style={styles.carImages}>{mappedThumbnails()}</View>
-        )}
-        <View style={styles.carImages}></View>
+        <View style={styles.carImages}>{mappedThumbnails()}</View>
         <View style={styles.bottomRow}>
-          <Text>{username}</Text>
+          <Text style={styles.username}>{username}</Text>
           <Text>{formattedDate}</Text>
         </View>
       </>
